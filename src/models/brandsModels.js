@@ -6,6 +6,10 @@ const brandsSchema = new mongoose.Schema({
     empresa: { type: String, required: true},
     tipo: { type: String, required: true},
     vegana: { type: Boolean, required: true }
+},
+{
+   versionKey: false
 })
+
 
 module.exports = mongoose.model('brand', brandsSchema)

@@ -1,21 +1,14 @@
-require('dotenv').config()
-
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
-const mongoose = require('mongoose')
+const index = require('./routes/index')
+const brands = require('./routes/brands')
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', (err) => console.error('connection error', err))
-db.once('open', () => console.log('Connected to database'))
-
+app.use(cors())
 app.use(express.json())
 
-const index = require('./routes/index')
 app.use('/index', index)
-
-const listBrands = require('./routes/brandsRoutes')
-app.use('/brands', listBrands)
+app.use('/brands', brands)
 
 module.exports = app
