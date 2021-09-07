@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 const lista = require('../models/brandsModels')
-const { connect } = require('../data/database')
-connect()
 
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET

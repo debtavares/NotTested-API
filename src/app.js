@@ -2,6 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 
+const { connect } = require('./data/database')
+connect()
+
 const index = require('./routes/index')
 const brands = require('./routes/brands')
 const users = require('./routes/users')

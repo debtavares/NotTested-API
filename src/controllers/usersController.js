@@ -3,9 +3,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
-const { connect } = require('../data/database')
-connect()
-
 const create = async (req, res) => {
   const senhaComHash = bcrypt.hashSync(req.body.senha, 10)
   req.body.senha = senhaComHash
