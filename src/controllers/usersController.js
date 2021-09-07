@@ -1,16 +1,16 @@
-const { connect } = require('../data/database')
-const Usuaria = require('../models/usuariasModels')
+const User = require('../models/usersModels')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
+const { connect } = require('../data/database')
 connect()
 
 const create = async (req, res) => {
   const senhaComHash = bcrypt.hashSync(req.body.senha, 10)
   req.body.senha = senhaComHash
 
-  const usuaria = new Usuaria(req.body)
+  const usuaria = new User(req.body)
 
   try {
     const novaUsuaria = await usuaria.save()
@@ -20,8 +20,9 @@ const create = async (req, res) => {
   }
 }
 
+
 const login = (req, res) => {
-  Usuaria.findOne({ email: req.body.email }, (err, usuariaEncontrada) => {
+  User.findOne({ email: req.body.email }, (err, usuariaEncontrada) => {
     if (!usuariaEncontrada) {
       return res.status(404).send({ message: 'Usuária não encontrada', email: `${req.body.email}`})
     }
