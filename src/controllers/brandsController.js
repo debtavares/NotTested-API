@@ -1,32 +1,31 @@
-const { connect } = require('../data/database')
 const mongoose = require('mongoose')
-const Brand = require('../models/brandsModels')
-
+const lista = require('../models/brandsModels')
+const { connect } = require('../data/database')
 connect()
 
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
-//Mostrar todos as marcas
 const getAll = async (req, res) => {
-
-        try {
-            const brands = await Brand.find()
+    try {
+        const brands = await lista.find()
             res.json(brands)
         } catch (err) {
             res.status(500).json({message: err.message})
         }
-      }
+    }
 
-//Mostrar uma
 const getOne = async (req, res) => {
-    res.send(res.brands)
-
+    try {
+        const findBrand = await lista.findById(req.params.id)
+        res.json(findBrand)
+    } catch (err) {
+        res.status(500).json({message: err.message})
+    }
 }
 
-//Criar uma
 const createOne = async (req, res) => {
-    const brands = new Brand({
+    const brands = new lista({
         _id: new mongoose.Types.ObjectId(),
         marca: req.body.marca,
         empresa: req.body.empresa,
@@ -42,36 +41,48 @@ const createOne = async (req, res) => {
     }
 }
 
-//Atualizar uma
 const updateOne = async (req, res) => {
-    if (req.body.marca != null) {
-        res.brands.marca = req.body.marca
-    }
-
     try {
-        const updateList = await res.brands.save()
-        res.json(updateList)
+        const findBrand = await lista.findById(req.params.id)
+
+        if (req.body.marca != null) {
+            findBrand.marca = req.body.marca
+        }
+        if (req.body.empresa != null) {
+            findBrand.empresa = req.body.empresa
+        }
+        if (req.body.tipo != null) {
+            findBrand.tipo = req.body.tipo
+        }
+        if (req.body.vegana != null) {
+            findBrand.vegana = req.body.vegana
+        }
+
+        const updateBrand = await findBrand.save()
+        res.status(200).json(updateBrand)
     } catch (err) {
-        res.status(400).json({ message: err.message})
+        res.status(500).json({message: err.message})
     }
 }
 
-
-//Deletar uma
 const deleteOne = async (req, res) => {
     try {
-        await res.brands.remove()
-        res.json({message: 'Marca deletada!'})
+        const deleteBrand = await lista.findById(req.params.id)
+        const removed = await deleteBrand.remove()
+        
+        res.status(200).json({
+            "mensagem": "Marca deletada",
+            removed})
+
     } catch (err) {
         res.status(500).json({ message: err.message})
     }
 }
 
-//função "marca nao encontrada"
 async function getList(req,res,next){
     let brands
     try {
-        brands = await Brand.findById(req.params.id)
+        brands = await lista.findById(req.params.id)
         if (brands == null) {
             return res.status(404).json({message: 'Marca não encontrada'})
         }

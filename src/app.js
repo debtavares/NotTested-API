@@ -8,7 +8,7 @@ const brands = require('./routes/brands')
 app.use(cors())
 app.use(express.json())
 
-app.use('/index', index)
+app.use('/', index)
 app.use('/brands', brands)
 
 module.exports = app
