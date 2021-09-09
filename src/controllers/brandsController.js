@@ -7,6 +7,7 @@ const SECRET = process.env.SECRET
 const getAll = async (req, res) => {
     try {
         const brands = await lista.find()
+        brands = brands.sort((a, b) =>b.marca - a.marca)
             res.json(brands)
         } catch (err) {
             res.status(500).json({message: err.message})
@@ -21,6 +22,7 @@ const getOne = async (req, res) => {
         res.status(500).json({message: err.message})
     }
 }
+
 
 const createOne = async (req, res) => {
     const brands = new lista({
@@ -65,8 +67,7 @@ const updateOne = async (req, res) => {
 
 const deleteOne = async (req, res) => {
     try {
-        const deleteBrand = await lista.findById(req.params.id)
-        const removed = await deleteBrand.remove()
+        const deleteBrand = await lista.findByIdAndDelete(req.params.id)
         
         res.status(200).json({
             "mensagem": "Marca deletada",
