@@ -4,6 +4,7 @@ const controller = require('../controllers/brandsController')
 
 
 router.get('/', controller.getAll)
+router.get('/:marca', controller.getByBrand, controller.getList)
 router.get('/:id', controller.getOne, controller.getList)
 router.post('/', controller.createOne)
 router.patch('/:id', controller.updateOne, controller.getList, controller.auth)

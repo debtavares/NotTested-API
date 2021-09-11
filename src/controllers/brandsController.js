@@ -7,11 +7,22 @@ const SECRET = process.env.SECRET
 const getAll = async (req, res) => {
     try {
         const brands = await lista.find()
-        brands = brands.sort((a, b) =>b.marca - a.marca)
             res.json(brands)
         } catch (err) {
-            res.status(500).json({message: err.message})
+            res.status(404).json({message: err.message})
         }
+    }
+
+    const getByBrand = async (req, res) => {
+        try {
+            const findByname = req.params.brands
+            const filteredBrands = await lista.find({brand: findByname})
+            res.json(filteredBrands)
+    
+        } catch (err) {
+            res.status(404).json({message: err.message})
+        }
+    
     }
 
 const getOne = async (req, res) => {
@@ -114,4 +125,4 @@ async function auth (req, res) {
     })
   }
 
-module.exports = { getAll, getOne, createOne, updateOne, deleteOne, getList, auth }
+module.exports = { getAll, getByBrand, getOne, createOne, updateOne, deleteOne, getList, auth }
