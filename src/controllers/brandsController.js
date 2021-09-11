@@ -107,7 +107,7 @@ async function auth (req, res) {
 
     jwt.verify(token, SECRET, (err) => {
       if (err) {
-        return res.status(403).send("Invalid token!")
+        return res.status(403).send("Token invalido")
       }
 
       return token
