@@ -14,8 +14,8 @@ const getAll = async (req, res) => {
     }
 
     const getByBrand = async (req, res) => {
-        const requestedbrand = req.params.brand
-        const filteredBrand = await lista.find({brand: requestedbrand})
+        const requestedbrand = req.params.marca
+        const filteredBrand = await lista.find({marca: requestedbrand})
     
         if(filteredBrand){
             res.status(200).json(filteredBrand)
