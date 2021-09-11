@@ -14,14 +14,9 @@ const getAll = async (req, res) => {
     }
 
     const getByBrand = async (req, res) => {
-        try {
             const findByname = req.params.brands
             const filteredBrands = await lista.find({brands: findByname})
             res.json(filteredBrands)
-    
-        } catch (err) {
-            res.status(404).json({message: err.message})
-        }
     
     }
 
