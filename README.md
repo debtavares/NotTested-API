@@ -20,7 +20,7 @@ Aplicação [aqui](https://on12-projeto-final.herokuapp.com/).
 
 ## Funcionalidades
 
-- [x] Campos do Schema: id (autogerado), marca, empresa, tipo, vegana;
+- [x] Campos do Schema: id (autogerado), marca, empresa, tipo, vegana (se possui itens veganos);
 - [x] Lista de todas as marcas cruelty free;
 - [x] Cadastro de novas marcas;
 - [x] Atualização do cadastro de alguma marca;
